@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 public class BanknotesCalculatorFactory {
 
     private final static Map<String, Supplier<BanknotesCalculator>> map = new HashMap<>();
-    public static final String DEFAULT_CALCULATOR = "BASIC";
+    private static final String DEFAULT_CALCULATOR = "BASIC";
 
     static {
         map.put("BASIC", BasicBanknotesCalculator::new);

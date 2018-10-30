@@ -4,7 +4,7 @@ import lukasgol.banknotescalculator.BanknotesCalculator;
 import lukasgol.state.CashMachineStateService;
 import lukasgol.withdrawal.DistributingBanknotesService;
 
-public class WithdrawalService {
+class WithdrawalService {
     private final DistributingBanknotesService distributingBanknotesService;
     private final CashMachineStateService stateService;
     private final BanknotesCalculator banknotesCalculator;
@@ -15,7 +15,7 @@ public class WithdrawalService {
         this.banknotesCalculator = banknotesCalculator;
     }
 
-    public void execute(int amount) {
+    void execute(int amount) {
         BanknotesAmount banknotesAmount = banknotesCalculator.calculateBanknotes(amount, stateService.getBanknotesState());
         distributingBanknotesService.withdrawal(banknotesAmount);
         reduceBanknotesStateBy(banknotesAmount);

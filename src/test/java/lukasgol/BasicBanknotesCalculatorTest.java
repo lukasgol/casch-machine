@@ -9,7 +9,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class BasicBanknotesCalculatorTest {
-    BasicBanknotesCalculator calculator;
+    private BasicBanknotesCalculator calculator;
     @Before
     public void setUp() {
         calculator = new BasicBanknotesCalculator();

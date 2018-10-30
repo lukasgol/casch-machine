@@ -8,7 +8,7 @@ import lukasgol.exceptions.NotEnoughProperBanknotesException;
 import lukasgol.validators.ValidatorResponse;
 import lukasgol.validators.WithdrawalValidator;
 
-public class CashMachine {
+class CashMachine {
 
     private ResponseService responseService;
     private AccountService accountService;
@@ -22,7 +22,7 @@ public class CashMachine {
         this.validator = validator;
     }
 
-    public void withdrawal(Account account, int amount) {
+    void withdrawal(Account account, int amount) {
 
         ValidatorResponse validatorResponse = validator.validate(amount, account.getBalance());
         if (validatorResponse.isOk()) {
