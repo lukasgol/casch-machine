@@ -1,5 +1,6 @@
-package lukasgol;
+package lukasgol.banknotescalculator;
 
+import lukasgol.BanknotesAmount;
 import lukasgol.banknotescalculator.BasicBanknotesCalculator;
 import lukasgol.exceptions.NotEnoughProperBanknotesException;
 import org.junit.Before;

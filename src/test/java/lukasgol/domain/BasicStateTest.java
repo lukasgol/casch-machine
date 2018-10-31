@@ -1,5 +1,6 @@
-package lukasgol;
+package lukasgol.domain;
 
+import lukasgol.BanknotesAmount;
 import lukasgol.state.BasicState;
 import org.junit.Test;
 

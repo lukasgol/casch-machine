@@ -71,7 +71,7 @@ public class BanknotesAmount {
         return new int[]{numberOf100, numberOf50, numberOf20, numberOf10};
     }
 
-    BanknotesAmount reduceByAmount(BanknotesAmount amount) {
+    public BanknotesAmount reduceByAmount(BanknotesAmount amount) {
         int numberOf100 = this.numberOf100 - amount.getNumberOf100();
         int numberOf50 = this.numberOf50 - amount.getNumberOf50();
         int numberOf20 = this.numberOf20 - amount.getNumberOf20();
@@ -79,7 +79,7 @@ public class BanknotesAmount {
         return new BanknotesAmount(numberOf100, numberOf50, numberOf20, numberOf10);
     }
 
-    int getBanknotesValue() {
+    public int getBanknotesValue() {
         return numberOf100 * 100 + numberOf50 * 50 + numberOf20 * 20 + numberOf10 * 10;
     }
 }
