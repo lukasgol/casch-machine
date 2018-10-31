@@ -44,29 +44,34 @@ public class SmartCalculator implements BanknotesCalculator {
     }
 
     private Map<Integer, Integer> calculateSuitableBanknote(Banknote suitableBanknote, int remainedAmount, List<Banknote> restOfBanknotes, Map<Integer, Integer> resultBanknotes) {
-        Banknote updatedBanknote = createUpdatedBanknote(suitableBanknote);
         int updatedRemainedAmount = remainedAmount - suitableBanknote.getValue();
-
-        List<Banknote> concatenatedList = concatenateList(restOfBanknotes, updatedBanknote);
-        if (updatedRemainedAmount != 0 && (concatenatedList.stream().noneMatch(i -> updatedRemainedAmount >= i.getValue() && i.getAmount() > 0))) {
-            return tryToFindBanknote(concatenateList(restOfBanknotes), remainedAmount, resultBanknotes);
+        if (updatedRemainedAmount == 0) {
+            resultBanknotes.put(suitableBanknote.getValue(), resultBanknotes.getOrDefault(suitableBanknote.getValue(), 0) + 1);
+            return resultBanknotes;
+        }
+        List<Banknote> concatenatedList = concatenateList(restOfBanknotes, createUpdatedBanknote(suitableBanknote));
+        if (isAllElementGoneOrGraterThanAmount(updatedRemainedAmount, concatenatedList)) {
+            return tryToFindBanknote(prepareList(restOfBanknotes), remainedAmount, resultBanknotes);
         } else {
-            resultBanknotes.put(updatedBanknote.getValue(), resultBanknotes.getOrDefault(updatedBanknote.getValue(), 0) + 1);
-            return tryToFindBanknote(concatenatedList, updatedRemainedAmount, resultBanknotes);
+            resultBanknotes.put(suitableBanknote.getValue(), resultBanknotes.getOrDefault(suitableBanknote.getValue(), 0) + 1);
+            return tryToFindBanknote(prepareList(concatenatedList), updatedRemainedAmount, resultBanknotes);
         }
     }
 
-    private List<Banknote> concatenateList(List<Banknote> restOfBanknotes, Banknote updatedBanknote) {
-        return Stream.of(restOfBanknotes, Collections.singletonList(updatedBanknote))
-                .flatMap(Collection::stream)
-                .filter(s -> s.getAmount() > 0)
-                .sorted(Comparator.comparing(Banknote::getWeight).reversed())
-                .collect(Collectors.toList());
+    private boolean isAllElementGoneOrGraterThanAmount(int updatedRemainedAmount, List<Banknote> concatenatedList) {
+        return concatenatedList.stream().noneMatch(i -> updatedRemainedAmount >= i.getValue() && i.getAmount() > 0);
     }
 
-    private List<Banknote> concatenateList(List<Banknote> restOfBanknotes) {
-        return Stream.of(restOfBanknotes)
-                .flatMap(Collection::stream)
+    private List<Banknote> concatenateList(List<Banknote> restOfBanknotes, Banknote updatedBanknote) {
+        List list = new ArrayList<Banknote>() {{
+            add(updatedBanknote);
+            addAll(restOfBanknotes);
+        }};
+        return list;
+    }
+
+    private List<Banknote> prepareList(List<Banknote> restOfBanknotes) {
+        return restOfBanknotes.stream()
                 .filter(s -> s.getAmount() > 0)
                 .sorted(Comparator.comparing(Banknote::getWeight).reversed())
                 .collect(Collectors.toList());

@@ -71,11 +71,4 @@ public class BasicBanknotesCalculatorTest {
         BanknotesAmount amount = calculator.calculateBanknotes(70, state);
         assertThat(amount,is(new BanknotesAmount(0,1,1,0)));
     }
-
-    @Test
-    public void Given60AmountAndZero10BanknotesShouldReturnThree30Banknote() {
-        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 0);
-        BanknotesAmount amount = calculator.calculateBanknotes(60, state);
-        assertThat(amount, is(new BanknotesAmount(0, 0, 3, 0)));
-    }
 }
