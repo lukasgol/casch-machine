@@ -17,29 +17,29 @@ public class SmartCalculator implements BanknotesCalculator {
                 .sorted(Comparator.comparing(Banknote::getWeight).reversed())
                 .collect(Collectors.toList());
 
-        Map<Integer, Integer> map = recursive(banknotes, amount, new HashMap());
+        Map<Integer, Integer> map = tryToFindBanknote(banknotes, amount, new HashMap());
         return new BanknotesAmount(map.getOrDefault(100, 0), map.getOrDefault(50, 0), map.getOrDefault(20, 0), map.getOrDefault(10, 0));
     }
 
-    private Map<Integer, Integer> recursive(List<Banknote> banknotes, int remainedAmount, Map<Integer, Integer> map) {
+    private Map<Integer, Integer> tryToFindBanknote(List<Banknote> banknotes, int remainedAmount, Map<Integer, Integer> map) {
 
         if (remainedAmount > 0 && banknotes.isEmpty()) {
             throw new NotEnoughProperBanknotesException();
         } else if (remainedAmount > 0) {
-            return calculateBanknotes(banknotes, remainedAmount, map);
+            return findBanknote(banknotes, remainedAmount, map);
         } else {
             return map;
         }
     }
 
-    private Map<Integer, Integer> calculateBanknotes(List<Banknote> banknotes, int remainedAmount, Map<Integer, Integer> resultBanknotes) {
+    private Map<Integer, Integer> findBanknote(List<Banknote> banknotes, int remainedAmount, Map<Integer, Integer> resultBanknotes) {
         Banknote banknoteHead = banknotes.subList(0, 1).get(0);
         List<Banknote> banknotesTail = banknotes.subList(1, banknotes.size());
 
         if (isBanknoteSuitable(remainedAmount, banknoteHead)) {
             return calculateSuitableBanknote(banknoteHead, remainedAmount, banknotesTail, resultBanknotes);
         } else {
-            return recursive(banknotesTail, remainedAmount, resultBanknotes);
+            return tryToFindBanknote(banknotesTail, remainedAmount, resultBanknotes);
         }
     }
 
@@ -47,7 +47,7 @@ public class SmartCalculator implements BanknotesCalculator {
         Banknote updatedBanknote = createUpdatedBanknote(suitableBanknote);
         int updatedRemainedAmount = remainedAmount - suitableBanknote.getValue();
         resultBanknotes.put(updatedBanknote.getValue(), resultBanknotes.getOrDefault(updatedBanknote.getValue(), 0) + 1);
-        return recursive(concatenateList(restOfBanknotes, updatedBanknote), updatedRemainedAmount, resultBanknotes);
+        return tryToFindBanknote(concatenateList(restOfBanknotes, updatedBanknote), updatedRemainedAmount, resultBanknotes);
     }
 
     private List<Banknote> concatenateList(List<Banknote> restOfBanknotes, Banknote updatedBanknote) {
@@ -78,20 +78,6 @@ class Banknote {
 
     int getWeight() {
         return value * amount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Banknote banknote = (Banknote) o;
-        return value == banknote.value &&
-                amount == banknote.amount;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value, amount);
     }
 
     int getValue() {
