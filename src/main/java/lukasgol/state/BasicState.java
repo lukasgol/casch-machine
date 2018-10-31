@@ -20,18 +20,4 @@ public class BasicState implements CashMachineStateService {
     public void updateBanknotesState(BanknotesAmount state) {
         this.banknotesState = state;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BasicState that = (BasicState) o;
-        return Objects.equals(banknotesState, that.banknotesState);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(banknotesState);
-    }
 }

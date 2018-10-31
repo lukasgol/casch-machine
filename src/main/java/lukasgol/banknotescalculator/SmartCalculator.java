@@ -46,12 +46,26 @@ public class SmartCalculator implements BanknotesCalculator {
     private Map<Integer, Integer> calculateSuitableBanknote(Banknote suitableBanknote, int remainedAmount, List<Banknote> restOfBanknotes, Map<Integer, Integer> resultBanknotes) {
         Banknote updatedBanknote = createUpdatedBanknote(suitableBanknote);
         int updatedRemainedAmount = remainedAmount - suitableBanknote.getValue();
-        resultBanknotes.put(updatedBanknote.getValue(), resultBanknotes.getOrDefault(updatedBanknote.getValue(), 0) + 1);
-        return tryToFindBanknote(concatenateList(restOfBanknotes, updatedBanknote), updatedRemainedAmount, resultBanknotes);
+
+        List<Banknote> concatenatedList = concatenateList(restOfBanknotes, updatedBanknote);
+        if (updatedRemainedAmount != 0 && (concatenatedList.stream().noneMatch(i -> updatedRemainedAmount >= i.getValue() && i.getAmount() > 0))) {
+            return tryToFindBanknote(concatenateList(restOfBanknotes), remainedAmount, resultBanknotes);
+        } else {
+            resultBanknotes.put(updatedBanknote.getValue(), resultBanknotes.getOrDefault(updatedBanknote.getValue(), 0) + 1);
+            return tryToFindBanknote(concatenatedList, updatedRemainedAmount, resultBanknotes);
+        }
     }
 
     private List<Banknote> concatenateList(List<Banknote> restOfBanknotes, Banknote updatedBanknote) {
         return Stream.of(restOfBanknotes, Collections.singletonList(updatedBanknote))
+                .flatMap(Collection::stream)
+                .filter(s -> s.getAmount() > 0)
+                .sorted(Comparator.comparing(Banknote::getWeight).reversed())
+                .collect(Collectors.toList());
+    }
+
+    private List<Banknote> concatenateList(List<Banknote> restOfBanknotes) {
+        return Stream.of(restOfBanknotes)
                 .flatMap(Collection::stream)
                 .filter(s -> s.getAmount() > 0)
                 .sorted(Comparator.comparing(Banknote::getWeight).reversed())

@@ -102,6 +102,49 @@ public class SmartCalculatorTest {
         BanknotesAmount state = new BanknotesAmount(10, 10, 10, 10);
         BanknotesAmount amount = calculator.calculateBanknotes(0, state);
         assertThat(amount, is(new BanknotesAmount(0, 0, 0, 0)));
+    }
 
+    @Test
+    public void Given10AmountShouldReturnOne10Banknote() {
+        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 10);
+        BanknotesAmount amount = calculator.calculateBanknotes(10, state);
+        assertThat(amount, is(new BanknotesAmount(0, 0, 0, 1)));
+    }
+
+    @Test
+    public void Given20AmountShouldReturnOne20Banknote() {
+        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 10);
+        BanknotesAmount amount = calculator.calculateBanknotes(20, state);
+        assertThat(amount, is(new BanknotesAmount(0, 0, 1, 0)));
+    }
+
+
+    @Test
+    public void Given50AmountShouldReturnOne50Banknote() {
+        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 10);
+        BanknotesAmount amount = calculator.calculateBanknotes(50, state);
+        assertThat(amount, is(new BanknotesAmount(0, 1, 0, 0)));
+    }
+
+
+    @Test
+    public void Given100AmountShouldReturnOne100Banknote() {
+        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 10);
+        BanknotesAmount amount = calculator.calculateBanknotes(100, state);
+        assertThat(amount, is(new BanknotesAmount(1, 0, 0, 0)));
+    }
+
+    @Test
+    public void Given100AmountAndZero100BanknotesShouldReturnTwo50Banknote() {
+        BanknotesAmount state = new BanknotesAmount(0, 10, 10, 10);
+        BanknotesAmount amount = calculator.calculateBanknotes(100, state);
+        assertThat(amount, is(new BanknotesAmount(0, 2, 0, 0)));
+    }
+
+    @Test
+    public void Given60AmountAndZero10BanknotesShouldReturnThree30Banknote() {
+        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 0);
+        BanknotesAmount amount = calculator.calculateBanknotes(60, state);
+        assertThat(amount, is(new BanknotesAmount(0, 0, 3, 0)));
     }
 }
