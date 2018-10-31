@@ -84,4 +84,24 @@ public class SmartCalculatorTest {
         BanknotesAmount state = new BanknotesAmount(0, 2, 100, 0);
         BanknotesAmount amount = calculator.calculateBanknotes(110, state);
     }
+
+    @Test(expected = NotEnoughProperBanknotesException.class)
+    public void GivenMoreAmountToWithdrawalThanCashInStateShouldThrowNotEnoughProperBanknotesException() {
+        BanknotesAmount state = new BanknotesAmount(1, 2, 1, 1);
+        BanknotesAmount amount = calculator.calculateBanknotes(1000, state);
+    }
+
+    @Test(expected = NotEnoughProperBanknotesException.class)
+    public void GivenEmptyCashMachineShouldThrowNotEnoughProperBanknotesException2() {
+        BanknotesAmount state = new BanknotesAmount(0, 0, 0, 0);
+        BanknotesAmount amount = calculator.calculateBanknotes(1000, state);
+    }
+
+    @Test
+    public void GivenZeroAmountToWithdrawalShouldReturnZeroBanknotes() {
+        BanknotesAmount state = new BanknotesAmount(10, 10, 10, 10);
+        BanknotesAmount amount = calculator.calculateBanknotes(0, state);
+        assertThat(amount, is(new BanknotesAmount(0, 0, 0, 0)));
+
+    }
 }
