@@ -63,11 +63,10 @@ public class SmartCalculator implements BanknotesCalculator {
     }
 
     private List<Banknote> concatenateList(List<Banknote> restOfBanknotes, Banknote updatedBanknote) {
-        List list = new ArrayList<Banknote>() {{
+        return new ArrayList<>() {{
             add(updatedBanknote);
             addAll(restOfBanknotes);
         }};
-        return list;
     }
 
     private List<Banknote> prepareList(List<Banknote> restOfBanknotes) {
