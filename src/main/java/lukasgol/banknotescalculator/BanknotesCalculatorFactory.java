@@ -14,7 +14,7 @@ public class BanknotesCalculatorFactory {
         map.put("SMART", SmartCalculator::new);
     }
 
-    private BanknotesCalculator getCalculator(String calculatorType) {
+    public BanknotesCalculator getCalculator(String calculatorType) {
         Supplier<BanknotesCalculator> calculator = map.get(calculatorType.toUpperCase());
         if (calculator != null) {
             return calculator.get();
