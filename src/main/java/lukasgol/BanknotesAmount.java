@@ -24,19 +24,19 @@ public class BanknotesAmount {
         this(banknotes[0], banknotes[1], banknotes[2], banknotes[3]);
     }
 
-    private int getNumberOf10() {
+    public int getNumberOf10() {
         return numberOf10;
     }
 
-    private int getNumberOf20() {
+    public int getNumberOf20() {
         return numberOf20;
     }
 
-    private int getNumberOf50() {
+    public int getNumberOf50() {
         return numberOf50;
     }
 
-    private int getNumberOf100() {
+    public int getNumberOf100() {
         return numberOf100;
     }
 
