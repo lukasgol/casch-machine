@@ -1,11 +1,12 @@
 package lukasgol.state;
 
 import lukasgol.BanknotesAmount;
+import lukasgol.Configuration;
 
 public interface CashMachineStateService {
 
     default int getMinState() {
-        return 1000;
+        return Configuration.MIN_BANKNOTES_VALUE_REQUIRED;
     }
 
     BanknotesAmount getBanknotesState();

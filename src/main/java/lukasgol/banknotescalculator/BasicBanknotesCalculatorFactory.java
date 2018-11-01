@@ -30,10 +30,7 @@ public class BasicBanknotesCalculatorFactory implements BanknotesCalculatorFacto
 
     @Override
     public BanknotesCalculator chooseCalculator(BanknotesAmount state) {
-        return isAgileCalculateRequired() ? getCalculator("SMART") : defaultCalculator();
+        return new AgileCalculateResolver(state).resolve() ? getCalculator("SMART") : defaultCalculator();
     }
 
-    public boolean isAgileCalculateRequired() {
-        return true;
-    }
 }

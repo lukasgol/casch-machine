@@ -3,6 +3,7 @@ package lukasgol.banknotescalculator;
 import lukasgol.BanknotesAmount;
 import lukasgol.exceptions.NotEnoughProperBanknotesException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -148,8 +149,9 @@ public class SmartCalculatorTest {
         assertThat(amount, is(new BanknotesAmount(0, 0, 3, 0)));
     }
 
-    @Test
-    public void x() {
+    @Test()
+    @Ignore
+    public void GivenAmountEqals50AndTwo50AndTen20ShouldReturnOne50AndOne10() {
         BanknotesAmount state = new BanknotesAmount(0, 2, 10, 0);
         BanknotesAmount amount = calculator.calculateBanknotes(70, state);
         assertThat(amount, is(new BanknotesAmount(0, 1, 1, 0)));

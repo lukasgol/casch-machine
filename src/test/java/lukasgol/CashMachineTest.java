@@ -47,7 +47,7 @@ public class CashMachineTest {
         when(validator.validate(anyInt(), anyDouble())).thenReturn(new ValidatorResponse(Response.OK, true));
         int amount = 100;
         cashMachine.withdrawal(account, amount);
-        verify(withdrawalService, times(1)).execute(anyInt());
+        verify(withdrawalService, times(1)).withdraw(anyInt());
         verify(validator, times(1)).validate(anyInt(), anyDouble());
         verify(accountService, times(1)).updateBalance(anyDouble());
         verify(responseService).processResponse(Response.OK);
@@ -57,9 +57,9 @@ public class CashMachineTest {
     public void whenWithdrawalServiceThrowsExceptionShouldReturnErrorResponse() {
         when(validator.validate(anyInt(), anyDouble())).thenReturn(new ValidatorResponse(Response.OK, true));
         int amount = 100;
-        doThrow(new NotEnoughProperBanknotesException()).when(withdrawalService).execute(anyInt());
+        doThrow(new NotEnoughProperBanknotesException()).when(withdrawalService).withdraw(anyInt());
         cashMachine.withdrawal(account, amount);
-        verify(withdrawalService, times(1)).execute(anyInt());
+        verify(withdrawalService, times(1)).withdraw(anyInt());
         verify(validator, times(1)).validate(anyInt(), anyDouble());
         verifyZeroInteractions(accountService);
         verify(responseService).processResponse(Response.NOT_ENOUGH_BANKNOTES);

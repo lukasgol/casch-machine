@@ -34,7 +34,7 @@ public class WithdrawalServiceTest {
 
     @Test
     public void shouldExecuteServices() {
-        withdrawalService.execute(100);
+        withdrawalService.withdraw(100);
         verify(distributingBanknotesService, times(1)).withdrawal(returnedBanknotesAmount);
         verify(stateService, times(2)).getBanknotesState();
         verify(stateService, times(1)).updateBanknotesState(newBanknotesAmount);

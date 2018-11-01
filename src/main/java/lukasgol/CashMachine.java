@@ -28,7 +28,7 @@ class CashMachine {
         ValidatorResponse validatorResponse = validator.validate(amount, account.getBalance());
         if (validatorResponse.isOk()) {
             try {
-                withdrawalService.execute(amount);
+                withdrawalService.withdraw(amount);
                 accountService.updateBalance(account.getBalance() - amount);
                 responseService.processResponse(validatorResponse.getResponse());
             } catch (NotEnoughProperBanknotesException e) {

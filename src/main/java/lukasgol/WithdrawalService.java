@@ -6,7 +6,6 @@ import lukasgol.state.CashMachineStateService;
 import lukasgol.withdrawal.DistributingBanknotesService;
 
 class WithdrawalService {
-    public static final int MAX_BANKNOTES_TO_WITHDRAWAL = 100;
     private final DistributingBanknotesService distributingBanknotesService;
     private final CashMachineStateService stateService;
     private final BanknotesCalculatorFactory basicBanknotesCalculatorFactory;
@@ -17,10 +16,10 @@ class WithdrawalService {
         this.basicBanknotesCalculatorFactory = basicBanknotesCalculatorFactory;
     }
 
-    void execute(int amount) {
+    void withdraw(int amount) {
         BanknotesAmount state = stateService.getBanknotesState();
         BanknotesAmount banknotesAmount = calculateBanknotes(amount, state);
-        if (banknotesAmount.banknotesAmount() > MAX_BANKNOTES_TO_WITHDRAWAL) {
+        if (banknotesAmount.banknotesAmount() > Configuration.MAX_BANKNOTES_TO_WITHDRAWAL) {
             throw new TooManyBanknotesToWithdrawalException();
         }
         distributingBanknotesService.withdrawal(banknotesAmount);
