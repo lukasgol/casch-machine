@@ -7,6 +7,6 @@ public class BasicDistributingBanknotesService implements DistributingBanknotesS
 
     @Override
     public void withdrawal(BanknotesAmount banknotesAmount) {
-        System.out.print("Withdrawing banknotes: " + banknotesAmount.toString());
+        System.out.println("Withdrawing banknotes: " + banknotesAmount.toString());
     }
 }

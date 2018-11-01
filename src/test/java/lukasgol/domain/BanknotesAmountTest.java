@@ -46,7 +46,6 @@ public class BanknotesAmountTest {
         banknotesAmount.reduceByAmount(new BanknotesAmount(20, 10, 10, 10));
     }
 
-
     @Test
     public void shouldReturnCorrectBanknotesValueSum() {
         BanknotesAmount banknotesAmount = new BanknotesAmount(10, 1, 3, 10);
@@ -54,5 +53,14 @@ public class BanknotesAmountTest {
         int sum = banknotesAmount.getBanknotesValue();
 
         assertEquals(sum, 1210);
+    }
+
+    @Test
+    public void shouldReturnCorrectBanknotesAmountSum() {
+        BanknotesAmount banknotesAmount = new BanknotesAmount(10, 1, 3, 10);
+
+        int sum = banknotesAmount.banknotesAmount();
+
+        assertEquals(sum, 24);
     }
 }

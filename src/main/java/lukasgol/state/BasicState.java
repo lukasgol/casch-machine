@@ -20,6 +20,7 @@ public class BasicState implements CashMachineStateService {
     public void updateBanknotesState(BanknotesAmount state) {
         this.banknotesState = state;
         if (isRefillNeeded()) {
+            //Refill Service will know if notify was already sent
             refillService.notifyRefill();
         }
     }

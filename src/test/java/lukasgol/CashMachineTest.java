@@ -34,33 +34,33 @@ public class CashMachineTest {
 
     @Test
     public void givenValidateResponseErrorShouldReturnResponseError() {
-        when(validator.validate(anyInt(), anyLong())).thenReturn(new ValidatorResponse(Response.BAD_AMOUNT, false));
+        when(validator.validate(anyInt(), anyDouble())).thenReturn(new ValidatorResponse(Response.BAD_AMOUNT, false));
         int amount = 100;
         cashMachine.withdrawal(account, amount);
-        verify(validator, times(1)).validate(anyInt(), anyLong());
+        verify(validator, times(1)).validate(anyInt(), anyDouble());
         verifyZeroInteractions(withdrawalService);
         verify(responseService).processResponse(Response.BAD_AMOUNT);
     }
 
     @Test
     public void givenValidateCorrectResponseShouldReturnCorrectResponse() {
-        when(validator.validate(anyInt(), anyLong())).thenReturn(new ValidatorResponse(Response.OK, true));
+        when(validator.validate(anyInt(), anyDouble())).thenReturn(new ValidatorResponse(Response.OK, true));
         int amount = 100;
         cashMachine.withdrawal(account, amount);
         verify(withdrawalService, times(1)).execute(anyInt());
-        verify(validator, times(1)).validate(anyInt(), anyLong());
-        verify(accountService, times(1)).updateBalance(anyLong());
+        verify(validator, times(1)).validate(anyInt(), anyDouble());
+        verify(accountService, times(1)).updateBalance(anyDouble());
         verify(responseService).processResponse(Response.OK);
     }
 
     @Test
     public void whenWithdrawalServiceThrowsExceptionShouldReturnErrorResponse() {
-        when(validator.validate(anyInt(), anyLong())).thenReturn(new ValidatorResponse(Response.OK, true));
+        when(validator.validate(anyInt(), anyDouble())).thenReturn(new ValidatorResponse(Response.OK, true));
         int amount = 100;
         doThrow(new NotEnoughProperBanknotesException()).when(withdrawalService).execute(anyInt());
         cashMachine.withdrawal(account, amount);
         verify(withdrawalService, times(1)).execute(anyInt());
-        verify(validator, times(1)).validate(anyInt(), anyLong());
+        verify(validator, times(1)).validate(anyInt(), anyDouble());
         verifyZeroInteractions(accountService);
         verify(responseService).processResponse(Response.NOT_ENOUGH_BANKNOTES);
     }

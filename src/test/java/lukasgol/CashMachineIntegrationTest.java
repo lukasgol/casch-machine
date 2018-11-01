@@ -7,14 +7,11 @@ import lukasgol.banknotescalculator.SmartCalculator;
 import lukasgol.confirmation.Response;
 import lukasgol.confirmation.ResponseService;
 import lukasgol.state.BasicState;
-import lukasgol.state.CashMachineStateService;
 import lukasgol.state.RefillService;
 import lukasgol.validators.BasicWithdrawalValidator;
 import lukasgol.withdrawal.DistributingBanknotesService;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Random;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -76,7 +73,7 @@ public class CashMachineIntegrationTest {
 
 
     @Test
-    public void x() {
+    public void given100StateAndThreeTransactionShouldWithdrawal2AndReturnNotEnoughBanknotesOnce() {
         Account account = new Account(10000000, "", "");
         WithdrawalService withdrawalService = new WithdrawalService(distributingBanknotesService, new BasicState(new BanknotesAmount(0, 0, 0, 10), refillService), calculatorFactory);
         CashMachine cashMachine = new CashMachine(withdrawalService, responseService, accountService, new BasicWithdrawalValidator());
@@ -89,7 +86,8 @@ public class CashMachineIntegrationTest {
     }
 
     @Test
-    public void y() {
+    public void given100StateAndThreeTransactionShouldWithdrawal2AndReturnNotEnoughBanknotesOnceAndReturnNotEnoughOnAccountOnce() {
+
         Account account = new Account(90, "", "");
         Account account2 = new Account(2, "", "");
         WithdrawalService withdrawalService = new WithdrawalService(distributingBanknotesService, new BasicState(new BanknotesAmount(0, 0, 0, 10), refillService), calculatorFactory);
@@ -106,22 +104,5 @@ public class CashMachineIntegrationTest {
         verify(distributingBanknotesService).withdrawal(new BanknotesAmount(0, 0, 0, 1));
     }
 
-    @Test
-    public void z() {
-        Account account = new Account(1000, "", "");
-        CashMachineStateService state = new BasicState(new BanknotesAmount(100, 100, 100, 100), refillService);
-        WithdrawalService withdrawalService = new WithdrawalService(distributingBanknotesService, state, calculatorFactory);
-        CashMachine cashMachine = new CashMachine(withdrawalService, responseService, accountService, new BasicWithdrawalValidator());
-        Random random = new Random();
-        for (int i = 0; i < 100; i++) {
-            int amount = random.nextInt(100) * 10;
-            cashMachine.withdrawal(account, amount);
-            System.out.println("amount: " + amount);
-            System.out.println("state: " + state.getBanknotesState());
-            if (state.isRefillNeeded()) {
-                //state.updateBanknotesState(new BanknotesAmount(100,100,100,100));
-                System.out.println("Refill");
-            }
-        }
-    }
+
 }

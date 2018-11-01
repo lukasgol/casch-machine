@@ -5,7 +5,7 @@ import lukasgol.confirmation.Response;
 public class BasicWithdrawalValidator implements WithdrawalValidator {
 
     @Override
-    public ValidatorResponse validate(int amount, long balance) {
+    public ValidatorResponse validate(int amount, double balance) {
         if (balance < amount) {
             return new ValidatorResponse(Response.NOT_ENOUGH_ON_ACCOUNT, false);
         } else if (isCorrectAmountToWithdraw(amount)) {

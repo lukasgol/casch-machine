@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class BasicStateTest {
 
@@ -29,5 +29,25 @@ public class BasicStateTest {
 
         BanknotesAmount expectedStateAmount = new BanknotesAmount(20, 20, 20, 20);
         assertThat(state.getBanknotesState(), is(expectedStateAmount));
+    }
+
+    @Test
+    public void givenSmallStateShouldInvokeRefill() {
+        BanknotesAmount newAmount = new BanknotesAmount(0, 0, 0, 0);
+        BasicState state = new BasicState(new BanknotesAmount(0, 0, 0, 0), refillService);
+
+        state.updateBanknotesState(newAmount);
+
+        verify(refillService).notifyRefill();
+    }
+
+    @Test
+    public void givenLargeStateShouldNotInvokeRefill() {
+        BanknotesAmount newAmount = new BanknotesAmount(10, 10, 10, 10);
+        BasicState state = new BasicState(new BanknotesAmount(0, 0, 0, 0), refillService);
+
+        state.updateBanknotesState(newAmount);
+
+        verifyZeroInteractions(refillService);
     }
 }

@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public final class Account {
 
-    private final long balance;
+    private final double balance;
     private final String firstName;
     private final String lastName;
 
-    public Account(long balance, String firstName, String lastName) {
+    public Account(double balance, String firstName, String lastName) {
         this.balance = balance;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,7 +30,12 @@ public final class Account {
         return Objects.hash(balance, firstName, lastName);
     }
 
-    public long getBalance() {
+    public double getBalance() {
         return balance;
+    }
+
+    @Override
+    public String toString() {
+        return "balance=" + balance;
     }
 }
