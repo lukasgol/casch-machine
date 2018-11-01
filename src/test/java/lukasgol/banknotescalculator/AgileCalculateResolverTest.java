@@ -26,4 +26,9 @@ public class AgileCalculateResolverTest {
     public void givenTen10AndOne100ShouldReturnTrue() {
         assertTrue(new AgileCalculateResolver(new BanknotesAmount(1,10,10,100)).resolve());
     }
+
+    @Test
+    public void givenOne10AndOneAndOne5020AndTen10ShouldReturnTrue() {
+        assertTrue(new AgileCalculateResolver(new BanknotesAmount(1,1,1,10)).resolve());
+    }
 }
