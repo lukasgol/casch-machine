@@ -51,4 +51,10 @@ public class BasicWithdrawalValidatorTest {
         ValidatorResponse validatorResponse = validator.validate(123, 1000);
         assertThat(validatorResponse, is(new ValidatorResponse(Response.BAD_AMOUNT, false)));
     }
+
+    @Test
+    public void givenLargeAmountShouldReturnFalse() {
+        ValidatorResponse validatorResponse = validator.validate(12000, 1000000);
+        assertThat(validatorResponse, is(new ValidatorResponse(Response.TO0_BIG_AMOUNT_TO_WITHDRAWAL, false)));
+    }
 }

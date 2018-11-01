@@ -4,7 +4,7 @@ public enum Response {
 
     NOT_ENOUGH_BANKNOTES("There is not enough banknotes"),
     NOT_ENOUGH_ON_ACCOUNT("There is not enough money on account"),
-    OK("Done"), BAD_AMOUNT("Wrong amount"), TOO_MANY_BANKNOTES_TO_WITHDRAWAL("too many banknotes in one operation");
+    OK("Done"), BAD_AMOUNT("Wrong amount"), TOO_MANY_BANKNOTES_TO_WITHDRAWAL("too many banknotes in one operation"), TO0_BIG_AMOUNT_TO_WITHDRAWAL("too big amount to withdrawal");
 
     private final String message;
 

@@ -1,5 +1,6 @@
 package lukasgol.validators;
 
+import lukasgol.Configuration;
 import lukasgol.confirmation.Response;
 
 public class BasicWithdrawalValidator implements WithdrawalValidator {
@@ -8,6 +9,9 @@ public class BasicWithdrawalValidator implements WithdrawalValidator {
 
     @Override
     public ValidatorResponse validate(int amount, double balance) {
+        if (amount > Configuration.MAX_AMOUNT_TO_WITHDRAWAL) {
+            return new ValidatorResponse(Response.TO0_BIG_AMOUNT_TO_WITHDRAWAL, false);
+        }
         if (balance < amount) {
             return new ValidatorResponse(Response.NOT_ENOUGH_ON_ACCOUNT, false);
         } else if (isCorrectAmountToWithdraw(amount)) {
