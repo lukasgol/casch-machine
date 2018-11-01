@@ -2,13 +2,13 @@ package lukasgol.state;
 
 import lukasgol.BanknotesAmount;
 
-import java.util.Objects;
-
 public class BasicState implements CashMachineStateService {
     private BanknotesAmount banknotesState;
+    private RefillService refillService;
 
-    public BasicState(int numberOf100, int numberOf50, int numberOf20, int numberOf10) {
-        this.banknotesState = new BanknotesAmount(numberOf100, numberOf50, numberOf20, numberOf10);
+    public BasicState(BanknotesAmount banknotesAmount, RefillService refillService) {
+        this.banknotesState = banknotesAmount;
+        this.refillService = refillService;
     }
 
     @Override
@@ -19,5 +19,9 @@ public class BasicState implements CashMachineStateService {
     @Override
     public void updateBanknotesState(BanknotesAmount state) {
         this.banknotesState = state;
+        if (isRefillNeeded()) {
+            refillService.notifyRefill();
+        }
     }
+
 }

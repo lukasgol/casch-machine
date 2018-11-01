@@ -1,6 +1,7 @@
 package lukasgol;
 
 import lukasgol.banknotescalculator.BanknotesCalculator;
+import lukasgol.banknotescalculator.BanknotesCalculatorFactory;
 import lukasgol.state.CashMachineStateService;
 import lukasgol.withdrawal.DistributingBanknotesService;
 import org.junit.Before;
@@ -16,6 +17,7 @@ public class WithdrawalServiceTest {
     private DistributingBanknotesService distributingBanknotesService;
     private CashMachineStateService stateService;
     private WithdrawalService withdrawalService;
+    private BanknotesCalculatorFactory banknotesCalculatorFactory;
     private BanknotesCalculator banknotesCalculator;
 
     @Before
@@ -23,9 +25,11 @@ public class WithdrawalServiceTest {
         distributingBanknotesService = mock(DistributingBanknotesService.class);
         stateService = mock(CashMachineStateService.class);
         when(stateService.getBanknotesState()).thenReturn(banknotesState);
+        banknotesCalculatorFactory = mock(BanknotesCalculatorFactory.class);
         banknotesCalculator = mock(BanknotesCalculator.class);
+        when(banknotesCalculatorFactory.chooseCalculator(any(BanknotesAmount.class))).thenReturn(banknotesCalculator);
         when(banknotesCalculator.calculateBanknotes(100, banknotesState)).thenReturn(returnedBanknotesAmount);
-        withdrawalService = new WithdrawalService(distributingBanknotesService, stateService, banknotesCalculator);
+        withdrawalService = new WithdrawalService(distributingBanknotesService, stateService, banknotesCalculatorFactory);
     }
 
     @Test

@@ -82,4 +82,8 @@ public class BanknotesAmount {
     public int getBanknotesValue() {
         return numberOf100 * 100 + numberOf50 * 50 + numberOf20 * 20 + numberOf10 * 10;
     }
+
+    public int banknotesAmount() {
+        return numberOf10 + numberOf20 + numberOf50 + numberOf100;
+    }
 }

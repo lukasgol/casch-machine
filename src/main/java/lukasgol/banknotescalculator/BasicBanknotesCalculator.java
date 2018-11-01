@@ -12,7 +12,7 @@ public class BasicBanknotesCalculator implements BanknotesCalculator {
         int remainedAmount = amount;
         for (int i = 0; i < BANKNOTES_VALUES_AMOUNT; i++) {
             if (BANKNOTE_VALUES[i] <= remainedAmount) {
-                int neededBanknotesAmount= remainedAmount / BANKNOTE_VALUES[i];
+                int neededBanknotesAmount = remainedAmount / BANKNOTE_VALUES[i];
                 if (hasEnoughBanknotesOfCurrentValue(neededBanknotesAmount, banknotesNumber[i])) {
                     if (isChecking10ValueBanknotes(i)) {
                         throw new NotEnoughProperBanknotesException();

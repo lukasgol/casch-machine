@@ -1,7 +1,6 @@
 package lukasgol.banknotescalculator;
 
 import lukasgol.BanknotesAmount;
-import lukasgol.banknotescalculator.BasicBanknotesCalculator;
 import lukasgol.exceptions.NotEnoughProperBanknotesException;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,15 +59,15 @@ public class BasicBanknotesCalculatorTest {
 
     @Test()
     public void given70AmountAndSmallAmountOf20ValueBanknotesShouldReturnOne50AndTwo10() {
-        int[] state = new int[]{0,2,1,0};
+        int[] state = new int[]{0, 2, 1, 0};
         BanknotesAmount amount = calculator.calculateBanknotes(70, state);
-        assertThat(amount,is(new BanknotesAmount(0,1,1,0)));
+        assertThat(amount, is(new BanknotesAmount(0, 1, 1, 0)));
     }
 
     @Test()
     public void givenAmountOfBanknoteShouldReturnCorrectAmount() {
-        int[] state = new int[]{0,2,100,0};
+        int[] state = new int[]{0, 2, 100, 0};
         BanknotesAmount amount = calculator.calculateBanknotes(70, state);
-        assertThat(amount,is(new BanknotesAmount(0,1,1,0)));
+        assertThat(amount, is(new BanknotesAmount(0, 1, 1, 0)));
     }
 }

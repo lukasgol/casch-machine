@@ -5,6 +5,7 @@ import lukasgol.account.AccountService;
 import lukasgol.confirmation.Response;
 import lukasgol.confirmation.ResponseService;
 import lukasgol.exceptions.NotEnoughProperBanknotesException;
+import lukasgol.exceptions.TooManyBanknotesToWithdrawalException;
 import lukasgol.validators.ValidatorResponse;
 import lukasgol.validators.WithdrawalValidator;
 
@@ -32,6 +33,8 @@ class CashMachine {
                 responseService.processResponse(validatorResponse.getResponse());
             } catch (NotEnoughProperBanknotesException e) {
                 responseService.processResponse(Response.NOT_ENOUGH_BANKNOTES);
+            } catch (TooManyBanknotesToWithdrawalException e) {
+                responseService.processResponse(Response.TOO_MANY_BANKNOTES_TO_WITHDRAWAL);
             }
         } else {
             responseService.processResponse(validatorResponse.getResponse());

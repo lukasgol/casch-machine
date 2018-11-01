@@ -147,4 +147,11 @@ public class SmartCalculatorTest {
         BanknotesAmount amount = calculator.calculateBanknotes(60, state);
         assertThat(amount, is(new BanknotesAmount(0, 0, 3, 0)));
     }
+
+    @Test
+    public void x() {
+        BanknotesAmount state = new BanknotesAmount(0, 2, 10, 0);
+        BanknotesAmount amount = calculator.calculateBanknotes(70, state);
+        assertThat(amount, is(new BanknotesAmount(0, 1, 1, 0)));
+    }
 }
