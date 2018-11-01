@@ -57,6 +57,21 @@ public class ManyWithdrawalTest {
     }
 
     @Test
+    public void shouldSimulateUntilRefillNeeded() {
+        Account account = new Account(1000, "", "");
+        CashMachineStateService state = new BasicState(new BanknotesAmount(100, 100, 100, 100), refillService);
+        WithdrawalService withdrawalService = new WithdrawalService(distributingBanknotesService, state, calculatorFactory);
+        CashMachine cashMachine = new CashMachine(withdrawalService, responseService, accountService, new BasicWithdrawalValidator());
+        Random random = new Random();
+        while (!state.isRefillNeeded()) {
+            int amount = random.nextInt(100) * 10;
+            cashMachine.withdrawal(account, amount);
+            System.out.println("amount: " + amount);
+            System.out.println("state: " + state.getBanknotesState());
+        }
+    }
+
+    @Test
     public void shouldSimulateWithdrawalWithRandomAccount() {
         CashMachineStateService state = new BasicState(new BanknotesAmount(100, 100, 100, 100), refillService);
         WithdrawalService withdrawalService = new WithdrawalService(distributingBanknotesService, state, calculatorFactory);
